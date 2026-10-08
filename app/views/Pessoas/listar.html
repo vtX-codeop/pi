@@ -1,0 +1,23 @@
+#{extends 'main.html' /}
+#{set title:'Listagem de Pessoa' /}
+
+<form action="@{Pessoas.listar}">
+	<input type="text" name="termo" value="${termo}" placeholder="Informe o nome ou email" />
+	<input type="submit" value="Buscar" />
+</form>
+
+<a href="@{Pessoas.form}">Nova Pessoa</a>
+
+#{list items:pessoas, as:'p'}
+	<p>Nome: ${p.nome}</p>
+	<p>Email: ${p.email}</p>
+	<a href="@{Pessoas.editar(p.id)}" class="btn btn-secondary">Editar</a> |
+	#{if session['perfilUsuario'] == 'ADMIN'}
+		<a href="@{Pessoas.remover(p.id)}" class="btn btn-danger">Remover</a> |
+	#{/if}
+	<a href="@{Pessoas.detalhar(p.id)}" class="btn btn-primary">Detalhar</a>
+	<hr />
+#{/list}
+#{else}
+	<p>Nenhuma pessoa cadastrada.</p>
+#{/else}

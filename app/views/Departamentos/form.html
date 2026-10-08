@@ -1,0 +1,35 @@
+#{extends 'main.html' /}
+#{set title:'Edição de Departamento' /}
+
+#{if d.id}
+	<h1>Edição de Departamentos</h1>
+#{/if}
+#{else}
+	<h1>Cadastro de Departamentos</h1>
+#{/else}
+
+<form action="@{Departamentos.salvar}">
+
+	<input type="hidden" name="departamento.id" value="${d.id}" />
+
+	<label>Nome:</label>
+	<input type="text" name="departamento.nome" value="${d.nome}" />
+	<br />
+	
+	<label>Ramal:</label>
+	<input type="text" name="departamento.ramal" value="${d.ramal}" />
+	<br />
+	
+	<label>Diretor:</label>
+	<select name="departamento.diretor.id">
+		#{list items:pessoas, as:'p'}
+			<option value="${p.id}" ${p.id == d.diretor?.id ? 'selected' : ''}>
+				${p.nome} (${p.email})
+			</option>
+		#{/list}
+	</select>
+	<br />
+	
+	<input type="submit" />
+
+</form>
